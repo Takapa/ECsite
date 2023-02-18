@@ -1,0 +1,14 @@
+
+.login-img{
+    background-image: url(../strage/images/pexels-photo-1552252.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 1200px; 
+    width:auto;
+}
+
+.show-img{
+    background-size: cover;
+    height: auto; 
+    width:auto;
+}
