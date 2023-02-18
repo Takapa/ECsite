@@ -24,9 +24,8 @@ class CartController extends Controller
     {
         $carts = $this->cart->all();
         $user = $this->user->findOrFail(Auth::user()->id);
-        $tatal = 0;
        
-        return view('users.carts.index')->with('carts', $carts)->with('user', $user)->with('tatal', $tatal);
+        return view('users.carts.index')->with('carts', $carts)->with('user', $user);
     }
 
     public function store($item_id, Request $request)
@@ -43,6 +42,20 @@ class CartController extends Controller
         
     }
 
+    public function store_direct($item_id, Request $request)
+    {
+        $user = $this->user->findOrFail(Auth::user()->id);
+
+        $this->cart->user_id  = Auth::User()->id;
+        $this->cart->item_id  = $item_id;
+        $this->cart->quantity = $request->quantity;
+        
+        $this->cart->save();
+
+        return redirect()->route('cart.show', $user->id);
+        
+    }
+
     public function destroy($id)
     {
         $this->cart->destroy($id);
@@ -53,7 +66,6 @@ class CartController extends Controller
     {
         $carts = Cart::findMany($request->id);
         $user = $this->user->findOrFail(Auth::user()->id);
-
 
         return view('users.carts.checkout')->with('carts',$carts)->with('user',$user);
     }

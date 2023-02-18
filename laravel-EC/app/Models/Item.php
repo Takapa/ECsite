@@ -9,14 +9,13 @@ class Item extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
-
-    public function getRouteKeyName()
+    public function user()
     {
-        return 'uuid';
+        return $this->belongsTo(User::class);
     }
 
-    public function images(){
-        return $this->hasMany(Image::class);
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
     }
 }

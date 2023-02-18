@@ -1,99 +1,67 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container px-4 py-5 mx-auto">
-        <div class="row d-flex justify-content-center">
-            <div class="col-2">
-                <h4 class="heading">買い物バッグ</h4>
-            </div>
-            <div class="col-10">
-                <div class="row text-right">
-                    <div class="col-4">
-                        <h6 class="mt-2">商品名</h6>
-                    </div>
-                    <div class="col-4">
-                        <h6 class="mt-2">商品内容</h6>
-                    </div>
-                    <div class="col-2">
-                        <h6 class="mt-2">数量</h6>
-                    </div>
-                    <div class="col-2">
-                        <h6 class="mt-2">金額</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="container px-4 my-5 mx-auto">
+        <table class="w-100 table">
+            <div class="h3">買い物バッグ</div>
+            <thead class="table table-dark">
+                <tr>
+                    <th class="text-center" style="width: 120px;"></th>
+                    <th class="text-center" style="width: 230px;">商品名</th>
+                    <th >商品内容</th>
+                    <th class="text-center" style="width: 180px;">数量</th>
+                    <th class="text-center" style="width: 200px;">金額</th>
+                </tr>
+            </thead>
+            <tbody>            
+                @forelse ($user->carts as $cart)
+                <input type="hidden" name="id[]" value="{{ $cart->id }}">
+                <tr class="border align-middle">    
+                    <td class="text-center" style="width: 120px;">
+                        @empty($cart->item->image1 OR $cart->item->image2)
+                        <div class="">
+                            <img src="{{ asset('/storage/images/noimage.png/') }}" style="width:100px; height:100px;">
+                        </div>
+                        @else
+                            <div class="">
+                                <img src="{{asset('/storage/images/'.$cart->item->image1) }}" style="width:100px; height:100px;">
+                            </div>
+                        @endempty
+                    </td>
+                    <td class="text-center" style="width: 230px;">{{ $cart->item->name }}</td>
+                    <td class="text-truncate" style="max-width: 200px;">{{ $cart->item->description }}</td>
+                    <td class="text-center" style="width: 180px;">
+                        <input type="number" name="quantity[]" value="{{ $cart->quantity }}" id="" class="w-25">
+                    </td>
+                    <td class="text-center" style="width: 200px;">{{ $cart->item->price }}円</td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5">カートに商品はありません。</td>
+                </tr>
+                @endforelse
+            </tbody>
+            <tfoot class="table table-secondary ">
+                <tr>
+                    <td colspan="4" class="text-center">合計金額</td>
+                    <?php $total = 0; 
+                        foreach($user->carts as $cart){
+                            $total = $total + $cart->item->price;
+                        }
+                    ?>
+                    <td class="text-center">{{ $total }}円</td>
+                </tr>
+            </tfoot>
+
+        </table>
+    </div>
 
         {{-- <form action="#" method="post">
             @csrf --}}
-            @foreach ($user->carts as $cart)
-                <input type="hidden" name="id[]" value="{{ $cart->id }}">
-                <div class="row d-flex justify-content-center border-top mb-5">
-                    <div class="col-2">
-                        <div class="row d-flex">
-                            @empty($cart->item->image1 OR $cart->item->image2)
-                                <div class="">
-                                    <img src="{{ asset('/storage/images/noimage.png/') }}" style="width:100px; height:100px;">
-                                </div>
-                            @else
-                                <div class="">
-                                    <img src="{{asset('/storage/images/'.$cart->item->image1) }}" style="width:100px; height:100px;">
-                                </div>
-                            @endempty
-                        </div>
-                    </div>
-                    <div class="my-auto col-10">
-                        <div class="row text-right">
-                            <div class="col-3">
-                                <p class="mob-text">{{ $cart->item->name }}</p>
-                            </div>
-                            <div class="col-4">
-                                <p class="mob-text">{{ $cart->item->description }}</p>
-                            </div>
-                            <div class="col-3">
-                                <div class="row d-flex justify-content-start px-3">
-                                    <input type="number" name="quantity[]" value="{{ $cart->quantity }}" id="" class="form-control w-25">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <h6 class="mob-text">{{ $cart->item->price }}円</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-                <div class="row d-flex justify-content-center border-top pt-5">
-                    <div class="col-2">
-                        <div class="row d-flex">
-                        </div>
-                    </div>
-                    <div class="my-auto col-10">
-                        <div class="row text-right">
-                            <div class="col-3">合計金額</div>
-                            <div class="col-4"></div>
-                            <div class="col-3">
-                                <?php $total_quantity = 0; 
-                                    foreach($user->carts as $cart){
-                                        $total_quantity = $total_quantity + $cart->quantity;
-                                    }
-                                ?>{{ $total_quantity }}
-                            </div>
-                            <div class="col-2">
-                                <?php $total_price = 0; 
-                                    foreach($user->carts as $cart){
-                                        $total_price = $total_price + $cart->item->price;
-                                    }
-                                ?>
-                                {{ $total_price }}円
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                    
-                    
+            
 
-{{-- 
-            <div class="row justify-content-center">
+                    
+            <div class="row justify-content-center mt-5">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="row ">
@@ -146,32 +114,11 @@
                                 <span id="checkout">Checkout</span>
 
                             </span>
-                        </button> --}}
+                        </button>
 
         {{-- </form> --}}
     </div>
     </div>
     </div>
-    </div>
-
-    {{-- <script>
-        $(document).ready(function() {
-
-            $('.radio-group .radio').click(function() {
-                $('.radio').addClass('gray');
-                $(this).removeClass('gray');
-            });
-
-            $('.plus-minus .plus').click(function() {
-                var count = $(this).parent().prev().text();
-                $(this).parent().prev().html(Number(count) + 1);
-            });
-
-            $('.plus-minus .minus').click(function() {
-                var count = $(this).parent().prev().text();
-                $(this).parent().prev().html(Number(count) - 1);
-            });
-
-        });
-    </script> --}}
+    </div
 @endsection

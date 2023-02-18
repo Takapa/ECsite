@@ -8,7 +8,9 @@
 }
 
 .show-img{
+    background-color: hsl(233, 7%, 22%);
     background-size: cover;
     height: auto; 
     width:auto;
 }
+

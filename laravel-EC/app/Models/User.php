@@ -38,11 +38,13 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
 
-    public function carts(){
-        return $this->hasMany(Cart::class)->latest();
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
     }
 }

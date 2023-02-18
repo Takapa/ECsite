@@ -4,9 +4,7 @@
 
 @section('content')
 <section>
-    <form action="{{ route('cart.store', $item->id) }}" method="post" enctype="multipart/form-data">
-    @csrf
-    <input type="hidden" name="quantity" value="1">
+    
 
     <div class="container mx-auto w-75 mt-5">
         <div class="container mx-auto w-75">
@@ -21,7 +19,7 @@
                                     <img src="{{ asset('/storage/images/' . $item->image2) }}" style="width:300px; height:400px;">   
                                 @endif
                             @else
-                                <img src="{{ asset('/storage/images/download-1.png/') }}" style="width:400px; height:590px;">
+                                <img src="{{ asset('/storage/images/noimage.png/') }}" style="width:400px; height:590px;">
                             @endif
                         </div>
                     </div>
@@ -50,13 +48,21 @@
                     </div>
                     <br>
                     <div class="" style="position:absolute; bottom:240px; left:20px;">
-                        <a href="#" class="btn btn-lg btn-outline-dark">今すぐ購入</a>
-                        <button type="submit" class="btn btn-lg bg-dark text-white ms-2" {{ $item->stock == 0 ? "disabled" : "" }}>カートに追加</button>    
+                        <form action="{{ route('cart.store_direct', $item->id) }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="btn btn-lg bg-dark text-white ms-2" {{ $item->stock == 0 ? "disabled" : "" }}>今すぐ購入</button>
+                        </form>
+
+                        <form action="{{ route('cart.store', $item->id) }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="btn btn-lg bg-dark text-white ms-2" {{ $item->stock == 0 ? "disabled" : "" }}>カートに追加</button>
+                        </form>
                     </div>
                 </div>    
             </div>
         </div>
-    </form>
 </section>
 
 <!------ Jquery (for switting picture) ------> 

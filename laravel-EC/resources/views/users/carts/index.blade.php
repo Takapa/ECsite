@@ -15,9 +15,7 @@
                 </tr>
             </thead>
             <tbody>
-                
-                @if($user->carts)
-                @foreach($user->carts as $cart)
+                @forelse($user->carts as $cart)
                 <tr>
                     <td>{{ $cart->item->name }}</td>
                     <td class="text-end" name="price[]">{{ $cart->item->price }}円</td>
@@ -29,27 +27,31 @@
                         </form>
                     </td>
                 </tr>
-                @endforeach
-                @endif
+                @empty
+                <tr>
+                    <td colspan="3" class="text-center py-3 h2 fw-bold">カートに商品はありません。</td>
+                </tr>
+                @endforelse
             </tbody>
        
             <tfoot class="table table-secondary ">
                 <tr>
-                    <td class="text-start">合計金額</td>
+                    <td class="text-center">合計金額</td>
                     <?php $total = 0; 
                         foreach($user->carts as $cart){
                             $total = $total + $cart->item->price;
                         }
                     ?>
-                        <td class="text-end">{{ $total }}円</td>
+                    <td class="text-end">{{ $total }}円</td>
                     <td></td>
                 </tr>
             </tfoot>
         </table>
+
         <form action="{{ route('cart.show', $user->id) }}" method="get">
             @csrf
-        <button type="submit" class="btn btn-warning btn-block btn-lg mt-4">Proceed to Pay</button>
-    </form>
+            <button type="submit" class="btn btn-warning btn-block btn-lg mt-4">Proceed to Pay</button>
+        </form>
 </div>
 </div>
 </main>

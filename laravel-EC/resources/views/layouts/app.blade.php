@@ -22,6 +22,10 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    
 </head>
 <body>
     <div id="app">
@@ -57,35 +61,32 @@
                             @endif
                         @else
                         
-                            <li class="nav-item dropdown">
-                                <a id="navbar-brand" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    ame notingtosay
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('user.index') }}">Create User</a>
-
-                                    <a class="dropdown-item" href="{{ url('/') }}">Create Item</a>
-
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                            {{-- <li class="navbar-item">
-                                <a class="nav-link" href="{{ route('cart.index', Auth::user()->id) }}"><i class="fa-solid fa-cart-plus"></i>Carts</a>
-                            </li> --}}
-                            <a href="{{ route('cart.index', Auth::user()->id) }}" class="nav-link">
-                                <i class="fa-solid fa-cart-shopping"></i> Cart <span class="badge {{ $count > 0 ? "bg-success" : "bg-warning" }}">{{ $count }}</span>
+                        <li class="nav-item dropdown">
+                            <a id="navbar-brand" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                メニュー
                             </a>
 
-                        @endguest
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('user.index') }}">Create User</a>
+
+                                <a class="dropdown-item" href="{{ url('/') }}">Create Item</a>
+
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                        <a href="{{ route('cart.index', Auth::user()->id) }}" class="nav-link">
+                            <i class="fa-solid fa-cart-shopping"></i> カート <span class="badge {{ $count > 0 ? "bg-success" : "bg-warning" }}">{{ $count }}</span>
+                        </a>
+
+                    @endguest
                     </ul>
                 </div>
             </div>
