@@ -71,6 +71,10 @@
 
                                 <a class="dropdown-item" href="{{ url('/') }}">Create Item</a>
 
+                                <a class="dropdown-item" href="{{ route('history.index') }}">
+                                    <i class="fas fa-newspaper"></i> Purhase History
+                                </a>
+
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">

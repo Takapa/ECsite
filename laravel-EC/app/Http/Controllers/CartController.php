@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\User;
 use App\Models\Item;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -70,5 +71,42 @@ class CartController extends Controller
         return view('users.carts.checkout')->with('carts',$carts)->with('user',$user);
     }
 
+    public function show_pay(Request $request)
+    {
+        $carts = Cart::findMany($request->id);
+        $user = $this->user->findOrFail(Auth::user()->id);
 
+        return view('users.carts.paymethod')->with('carts',$carts)->with('user',$user);
+    }
+
+    public function buyCartItems(Request $request){
+        $ids            = $request->id;
+        $quantity       = $request->quantity;
+        $transaction_id = Str::uuid();
+
+
+        foreach($ids as $key => $val):
+           $cart = $this->cart->findOrFail($val);
+           $cart->status = "paid";
+           $cart->quantity = $quantity[$key];
+           $cart->transaction_id = $transaction_id;
+
+           $cart->save();
+        endforeach;
+
+       $recent_order = Cart::findMany($ids);
+
+       foreach($recent_order as $order):
+          $item =  Item::findOrFail($order->item_id);
+          $item->stock = $item->stock - $order->quantity;
+
+          $item->save();
+       endforeach;
+
+        $total = 0;
+
+        return view('users.carts.receipt')
+                    ->with('paid_items',$recent_order)
+                    ->with('total',$total);
+    }
 }

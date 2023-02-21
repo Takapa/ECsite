@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\HistoryController;
 
 
 /*
@@ -19,7 +20,7 @@ use App\Http\Controllers\CartController;
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/', [ItemController::class, 'index'])->name('index');
@@ -40,4 +41,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/{item_id}/cart/store_direct', [CartController::class, 'store_direct'])->name('cart.store_direct');
     Route::delete('/{id}/cart/destroy', [CartController::class, 'destroy'])->name('cart.destroy');
     Route::get('/{id}/cart/show', [CartController::class, 'show'])->name('cart.show');
+    Route::get('/{id}/cart/show_pay', [CartController::class, 'show_pay'])->name('cart.show_pay');
+    Route::post('/buy/cart',[CartController::class,'buyCartItems'])->name('cart.buy');
+
+    Route::resource('/history',HistoryController::class);
 });

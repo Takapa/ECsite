@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'login')
+
 @section('content')
 <main class="login-img">
 <div class="container">
@@ -11,7 +13,6 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 

@@ -3,7 +3,7 @@
 @section('title', 'User')
 
 @section('content')
-<div class="mx-auto" style="width: 1500px">
+<div class="mx-auto mt-5" style="width: 1500px">
     <form action="{{ route('user.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row">

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'checkout cart')
+
 @section('content')
     <div class="container px-4 my-5 mx-auto">
         <table class="w-100 table">
@@ -14,6 +16,10 @@
                 </tr>
             </thead>
             <tbody>            
+
+
+            <form action="{{ route('cart.buy') }}" method="post">
+            @csrf
                 @forelse ($user->carts as $cart)
                 <input type="hidden" name="id[]" value="{{ $cart->id }}">
                 <tr class="border align-middle">    
@@ -52,73 +58,61 @@
                     <td class="text-center">{{ $total }}円</td>
                 </tr>
             </tfoot>
-
         </table>
-    </div>
 
-        {{-- <form action="#" method="post">
-            @csrf --}}
-            
+        <div class="container justify-content-center bg-white card">
+            <div class="card-body">
+                <div class="row p-4 border">
+                    <div class="col-6 h5">
+                        <input type="radio" name="pay" id="" style="width: 20px; height: 20px;">
+                        <img src="{{ asset('/storage/images/visa.png') }}" style="width: 60px; height: 30px;">
+                        <img src="{{ asset('/storage/images/master.jpeg') }}" style="width: 60px; height: 30px;">
+                        <img src="{{ asset('/storage/images/jcb.jpg') }}" style="width: 60px; height: 30px;" class="me-3">
+                        クレジットカード
+                    </div>
+                    <div class="col-6">
+                        <label for="">クレジットカード番号</label>
+                        <input type="number" name="" id="">
 
-                    
-            <div class="row justify-content-center mt-5">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="row ">
-                            <div class="col-lg-3 radio-group">
-                                <div class="row d-flex px-3 radio">
-                                    <img class="pay w-50" src="https://lara-commerce-bucket.s3.amazonaws.com/public/images/master.jpeg">
-                                    <p class="my-auto">Credit Card</p>
-                                </div>
-                                <div class="row d-flex px-3 radio gray">
-                                    <img class="pay w-50" src="https://lara-commerce-bucket.s3.amazonaws.com/public/images/visa.jpeg">
-                                    <p class="my-auto text-dark">Debit Card</p>
-                                </div>
-                                <div class="row d-flex px-3 radio gray mb-3">
-                                    <img class="pay w-50" src="https://lara-commerce-bucket.s3.amazonaws.com/public/images/paypal.jpeg">
-                                    <p class="my-auto text-dark">PayPal</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="row px-2">
-                                    <div class="form-group col-md-6">
-                                        <label class="form-control-label">Name on Card</label>
-                                        <input type="text" id="cname" name="cname" placeholder="Johnny Doe">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="form-control-label">Card Number</label>
-                                        <input type="text" id="cnum" name="cnum"
-                                            placeholder="1111 2222 3333 4444">
-                                    </div>
-                                </div>
-                                <div class="row px-2">
-                                    <div class="form-group col-md-6">
-                                        <label class="form-control-label">Expiration Date</label>
-                                        <input type="text" id="exp" name="exp" placeholder="MM/YYYY">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="form-control-label">CVV</label>
-                                        <input type="text" id="cvv" name="cvv" placeholder="***">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 mt-2">
+                        <label for="">有効期限</label>
+                        <select name="" id="">
+                            <option value="" hidden>月</option>
+                            <?php
+                                for ( $i = 1; $i <= 12; $i++ ) {
+                                 echo "<option value=\"{$i}\">{$i}</option>";
+                                }
+                            ?>
+                        </select>
 
-
-                            </div>
+                        <select name="" id="">
+                            <option value="" hidden>年</option>
+                            <?php
+                                for ( $i = 2023; $i <= 2035; $i++ ) {
+                                 echo "<option value=\"{$i}\">{$i}</option>";
+                                }
+                            ?>
+                        </select>
+                        
+                        <label for="">セキュリティコード</label>
+                        <input type="password" name="" id="">
+                    </div>
+                </div>
+                <div class="row border text-center h5">
+                        <input type="radio" name="pay" id="" class="col-1 m-4 " style="width: 20px; height: 20px;">
+                        <div class="col-5 border-end py-4">
+                            <img src="{{ asset('/storage/images/paypay.png') }}" class="me-3" style="width: 30px; height: 30px;">PayPay
                         </div>
-
-
-                        <button class="btn btn-primary w-25">
-                            <span>
-                                <span id="checkout">Checkout</span>
-
-                            </span>
-                        </button>
-
-        {{-- </form> --}}
+                        <input type="radio" name="pay" id="" class="col-1 m-4" style="width: 20px; height: 20px;">
+                        <div class="col-5 py-4">
+                            <img src="{{ asset('/storage/images/rpay.png') }}" style="width: 60px; height: 30px;">楽天Pay
+                        </div>
+                </div>
+            </div>
+        </div>
+  
+            <button type="submit" class="btn btn-warning btn-block btn-lg mt-4">購入</button>
+        </form>
     </div>
-    </div>
-    </div>
-    </div
+
+        
 @endsection
