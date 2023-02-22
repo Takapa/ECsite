@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
-    const LOCAL_STORAGE_FOLDER = 'public/images/';
+    const LOCAL_STORAGE_FOLDER = 'storage/images/';
     private $item;
     private $user;
 

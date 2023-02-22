@@ -16,9 +16,9 @@
                         <div class="cord-header border">
                             @if ($item->image1 or $item->image2)
                                 @if ($item->image1)
-                                    <img src="{{ asset('/storage/images/' . $item->image1)}}" style="width:100%; height:290px;" class="border w-100"> 
+                                    <img src="{{ asset('storage/images/' . $item->image1)}}" style="width:100%; height:290px;" class="border w-100"> 
                                 @else
-                                    <img src="{{ asset('/storage/images/' . $item->image2)}}" style="width:297px; height:290px;" class="border"> 
+                                    <img src="{{ asset('storage/images/' . $item->image2)}}" style="width:297px; height:290px;" class="border"> 
                                 @endif
                             @else
                                 <img src="{{ asset('/storage/images/noimage.png/') }}" style="width:297px; height:290px;"> 
