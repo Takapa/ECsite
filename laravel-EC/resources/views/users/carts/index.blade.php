@@ -14,11 +14,11 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody class="table table-light">
+                <tbody class="table table-light align-middle">
                     @forelse($user->carts as $cart)
                     <tr>
-                        <td>{{ $cart->item->name }}</td>
-                        <td class="text-end" name="price[]">{{ $cart->item->price }}円</td>
+                        <td class="text-center">{{ $cart->item->name }}</td>
+                        <td class="text-end" name="price[]">{{ number_format($cart->item->price) }}円</td>
                         <td class="text-end">
                             <form action="{{ route('cart.destroy', $cart->id) }}" method="post">
                                 @csrf
@@ -41,7 +41,7 @@
                                 $total = $total + $cart->item->price;
                             }
                         ?>
-                        <td class="text-end">{{ $total }}円</td>
+                        <td class="text-end">{{ number_format($total) }}円</td>
                         <td></td>
                     </tr>
                 </tfoot>

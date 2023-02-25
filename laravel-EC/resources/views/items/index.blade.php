@@ -5,7 +5,7 @@
 @section('content')
 <div class="container w-75">
     <div class="my-5">
-        <h2 class="text-center">Add an item</h2>
+        <h2 class="text-center">商品登録</h2>
     </div>
 
     <form action="{{ route('store') }}" method="post" enctype="multipart/form-data">

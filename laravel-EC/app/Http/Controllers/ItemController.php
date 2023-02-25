@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
-    const LOCAL_STORAGE_FOLDER = 'storage/images/';
+    const LOCAL_STORAGE_FOLDER = 'public/images/';
     private $item;
     private $user;
 
@@ -121,17 +121,17 @@ class ItemController extends Controller
     private function deleteImage1($image_name1){
         $image_path = self::LOCAL_STORAGE_FOLDER . $image_name1;
 
-        if(Storage::disk('local')->exists($image_path)){
+        if(Storage::disk('local')->exists($image_path)):
             Storage::disk('local')->delete($image_path);
-        }
+        endif;
     }
 
     private function deleteImage2($image_name2){
         $image_path = self::LOCAL_STORAGE_FOLDER . $image_name2;
 
-        if(Storage::disk('local')->exists($image_path)){
+        if(Storage::disk('local')->exists($image_path)):
             Storage::disk('local')->delete($image_path);
-        }
+        endif;
     }
 
     public function destroy($id)

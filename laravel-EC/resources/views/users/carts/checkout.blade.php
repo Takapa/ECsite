@@ -39,7 +39,7 @@
                     <td class="text-center" style="width: 180px;">
                         <input type="number" name="quantity[]" value="{{ $cart->quantity }}" id="" class="w-25">
                     </td>
-                    <td class="text-center" style="width: 200px;">{{ $cart->item->price }}円</td>
+                    <td class="text-center" style="width: 200px;">{{ number_format($cart->item->price) }}円</td>
                 </tr>
                 @empty
                 <tr>
@@ -55,64 +55,93 @@
                             $total = $total + $cart->item->price;
                         }
                     ?>
-                    <td class="text-center">{{ $total }}円</td>
+                    <td class="text-center">{{ number_format($total) }}円</td>
                 </tr>
             </tfoot>
         </table>
 
         <div class="container justify-content-center bg-white card">
             <div class="card-body">
-                <div class="row p-4 border">
-                    <div class="col-6 h5">
-                        <input type="radio" name="pay" id="" style="width: 20px; height: 20px;">
-                        <img src="{{ asset('/storage/images/visa.png') }}" style="width: 60px; height: 30px;">
+                <div class="row p-4">
+                    <div class="text-center border py-2">
+                        <input type="radio" name="btn-main" value='page1を表示' class="m-4" style="width: 20px; height: 20px;" onclick="SelectPage(1)" checked>
+                        <img src="{{ asset('/storage/images/visa.png') }}" class="ms-3" style="width: 60px; height: 30px;">
                         <img src="{{ asset('/storage/images/master.jpeg') }}" style="width: 60px; height: 30px;">
                         <img src="{{ asset('/storage/images/jcb.jpg') }}" style="width: 60px; height: 30px;" class="me-3">
-                        クレジットカード
+                        <span class="h5">クレジットカード</span>
                     </div>
+                    <div class="col-6 border p-4 text-center">
+                        <input type="radio" id="" name="btn-main" value='page2を表示' class="" style="width: 20px; height: 20px;" onclick="SelectPage(2)"><span class="ms-3">銀行振込</span>
+                    </div>
+                    <div class="col-6 border p-4 text-center">
+                        <input type="radio" id="" name="btn-main" value='page3を表示' class="" style="width: 20px; height: 20px;" onclick="SelectPage(3)">
+                        <img src="{{ asset('/storage/images/paypay.png') }}" class="ms-3" style="width: 30px; height: 30px;">PayPay
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer page1 " id="page1">
+                <div class="row my-2">
                     <div class="col-6">
                         <label for="">クレジットカード番号</label>
-                        <input type="number" name="" id="">
-
+                        <input type="number" name="" id="" style="width:400px;">
+                    </div>
+                    <div class="col-2">
                         <label for="">有効期限</label>
                         <select name="" id="">
                             <option value="" hidden>月</option>
                             <?php
                                 for ( $i = 1; $i <= 12; $i++ ) {
-                                 echo "<option value=\"{$i}\">{$i}</option>";
+                                    echo "<option value=\"{$i}\">{$i}</option>";
                                 }
                             ?>
                         </select>
-
                         <select name="" id="">
                             <option value="" hidden>年</option>
                             <?php
                                 for ( $i = 2023; $i <= 2035; $i++ ) {
-                                 echo "<option value=\"{$i}\">{$i}</option>";
+                                echo "<option value=\"{$i}\">{$i}</option>";
                                 }
                             ?>
                         </select>
-                        
+                    </div>
+                    <div class="col-4">
                         <label for="">セキュリティコード</label>
-                        <input type="password" name="" id="">
+                        <input type="password" name="password" id="" autocomplete="off">
                     </div>
                 </div>
-                <div class="row border text-center h5">
-                        <input type="radio" name="pay" id="" class="col-1 m-4 " style="width: 20px; height: 20px;">
-                        <div class="col-5 border-end py-4">
-                            <img src="{{ asset('/storage/images/paypay.png') }}" class="me-3" style="width: 30px; height: 30px;">PayPay
-                        </div>
-                        <input type="radio" name="pay" id="" class="col-1 m-4" style="width: 20px; height: 20px;">
-                        <div class="col-5 py-4">
-                            <img src="{{ asset('/storage/images/rpay.png') }}" style="width: 60px; height: 30px;">楽天Pay
-                        </div>
+            </div>
+            
+            <div class="card-footer page2" id="page2">
+                <div class="row my-2">
+                    <div class="col-3">
+                        <label for="">銀行名</label>
+                        <input type="text" name="" id="" class="form-control">
+                    </div>
+                    <div class="col-1">
+                        <label for="">支店番号</label>
+                        <input type="number" name="" id=""  class="form-control" >
+                    </div>
+                    <div class="col-4">
+                        <label for="">口座番号</label>
+                        <input type="number" name="" id=""  class="form-control">
+                    </div>
+                    <div class="col-4">
+                        <label for="">名義</label>
+                        <input type="text" name="" id=""  class="form-control">
+                    </div>
                 </div>
+            </div>
+
+            <div class="card-footer page3 bg-white" id="page3">
             </div>
         </div>
   
-            <button type="submit" class="btn btn-warning btn-block btn-lg mt-4">購入</button>
+            <button type="submit" class="btn btn-warning btn-block btn-lg mt-4">購入確定</button>
+
         </form>
     </div>
 
-        
+    <script src="{{asset('/js/index.js')}}"></script>
+
 @endsection
