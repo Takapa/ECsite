@@ -6,9 +6,9 @@
             <p>ご注文内容 詳細</p>
         </div>
         <div class="h4"> {{ $order_details->created_at->format('F j Y') }}</div>
+
         <div class="pt-1">
-            <p>注文 #{{ $order_details->transaction_id }} is currently<b class="text-dark text-uppercase">
-                    {{ $order_details->status }}</b></p>
+            <p>注文No. {{ $order_details->transaction_id }}</p>
         </div>
         <div class="btn close text-white"> &times; </div>
     </div>
@@ -17,12 +17,13 @@
                 <thead>
                     <tr class="text-uppercase text-muted">
                         <th scope="col">商品</th>
-                        <th scope="col" class="text-right">合計</th>
+                        <th scope="col" class="text-right">金額</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <th scope="row"></th>
+                        <td class="text-right"><b>{{ number_format($total) }}</b></td>
                         <td class="text-right"><b>{{ number_format($total) }}</b></td>
                     </tr>
                 </tbody>
@@ -31,10 +32,10 @@
         <div class="pt-2 border-bottom mb-3"></div>
         <div class="d-flex justify-content-start align-items-center pl-3">
             <div class="text-muted">支払い方法</div>
-            <div class="ml-auto"> <img
-                    src="{{asset('storage/images/visa.png')}}" alt=""
-                    width="30" height="30"> <label>Visa ******5342</label> </div>
-        </div>
+            <div class="ml-auto">
+                <img src="{{asset('storage/images/visa.png')}}" alt="" width="30" height="30"> <label>Visa {{ substr($paymethod->credit_number, 12,4) }}</label>
+            </div>
+            </div>
         <div class="d-flex justify-content-start align-items-center py-1 pl-3">
             <div class="text-muted">送料 &nbsp; </div>
             <div class="ml-auto"> <label>250円</label> </div>

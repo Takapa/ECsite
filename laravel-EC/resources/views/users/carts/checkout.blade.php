@@ -60,7 +60,8 @@
             </tfoot>
         </table>
 
-        <div class="container justify-content-center bg-white card">
+        <div class="container justify-content-center card">
+            <div class="card-header text-center mt-2 h2 bg-white">支払い方法</div>
             <div class="card-body">
                 <div class="row p-4">
                     <div class="text-center border py-2">
@@ -83,12 +84,17 @@
             <div class="card-footer page1 " id="page1">
                 <div class="row my-2">
                     <div class="col-6">
-                        <label for="">クレジットカード番号</label>
-                        <input type="number" name="" id="" style="width:400px;">
+                        <label for="credit_number">クレジットカード番号</label>
+                        <input type="number" name="credit_number" id="credit_number" style="width:400px;" minlength="16" required>
                     </div>
-                    <div class="col-2">
-                        <label for="">有効期限</label>
-                        <select name="" id="">
+                    {{-- Error --}}     
+                    @error('credit_number')
+                    <p class="text-danger.small">{{ $message }}</p>
+                    @enderror
+
+                    <div class="col-2 text-center">
+                        <label for="expiration_month">有効期限</label>
+                        <select name="expiration_month" id="expiration_month" required>
                             <option value="" hidden>月</option>
                             <?php
                                 for ( $i = 1; $i <= 12; $i++ ) {
@@ -96,7 +102,7 @@
                                 }
                             ?>
                         </select>
-                        <select name="" id="">
+                        <select name="expiration_year" id="expiration_year" required>
                             <option value="" hidden>年</option>
                             <?php
                                 for ( $i = 2023; $i <= 2035; $i++ ) {
@@ -105,10 +111,20 @@
                             ?>
                         </select>
                     </div>
-                    <div class="col-4">
+                    {{-- Error --}}     
+                    @error('expiration_month')
+                    <p class="text-danger.small">{{ $message }}</p>
+                    @enderror
+
+                    <div class="col-4 text-end">
                         <label for="">セキュリティコード</label>
-                        <input type="password" name="password" id="" autocomplete="off">
+                        <input type="password" name="password" id="password" autocomplete="off" required>
                     </div>
+                    {{-- Error --}}     
+                    @error('password')
+                    <p class="text-danger.small">{{ $message }}</p>
+                    @enderror
+
                 </div>
             </div>
             
@@ -136,7 +152,23 @@
             <div class="card-footer page3 bg-white" id="page3">
             </div>
         </div>
-  
+
+        <div class="container justify-content-center bg-white card mt-3">
+            <div class="card-header text-center bg-white h2">届け先住所</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <label for="location">住所</label>
+                        <input type="text" name="" id="" class="form-control" value="{{ (Auth::user()->location) }}">
+                    </div>
+                    <div class="col-6">
+                        <label for="contact">電話番号</label>
+                        <input type="number" name="" id="" class="form-control" value="{{ (Auth::user()->contact) }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+            
             <button type="submit" class="btn btn-warning btn-block btn-lg mt-4">購入確定</button>
 
         </form>

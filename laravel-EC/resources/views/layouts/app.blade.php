@@ -68,11 +68,11 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('user.index') }}">Create User</a>
+                                <a class="dropdown-item" href="{{ route('user.index') }}">ユーザー登録</a>
 
-                                <a class="dropdown-item" href="{{ url('/') }}">Create Item</a>
+                                <a class="dropdown-item" href="{{ url('/') }}">商品登録</a>
 
-                                <a class="dropdown-item" href="{{ route('history.index') }}">Purhase History</a>
+                                <a class="dropdown-item" href="{{ route('history.index') }}">注文履歴</a>
 
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();

@@ -6,19 +6,22 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\User;
 use App\Models\Item;
+use App\Models\Paymethod;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class CartController extends Controller
 {
     private $cart;
     private $user;
-    private $item;
+    private $paymethod;
 
-    public function __construct(Cart $cart, User $user, Item $item)
+    public function __construct(Cart $cart, User $user, Paymethod $paymethod)
     {
         $this->cart = $cart;
         $this->user = $user;
+        $this->paymethod  = $paymethod;
     }
 
     public function index()
@@ -80,10 +83,17 @@ class CartController extends Controller
     }
 
     public function buyCartItems(Request $request){
+
+        $this->paymethod->user_id  = Auth::User()->id;
+        $this->paymethod->credit_number    = $request->credit_number;
+        $this->paymethod->expiration_month = $request->expiration_month;
+        $this->paymethod->expiration_year  = $request->expiration_year;
+        $this->paymethod->password         = Hash::make($request->password);
+        $this->paymethod->save();
+
         $ids            = $request->id;
         $quantity       = $request->quantity;
         $transaction_id = Str::uuid();
-
 
         foreach($ids as $key => $val):
            $cart = $this->cart->findOrFail($val);

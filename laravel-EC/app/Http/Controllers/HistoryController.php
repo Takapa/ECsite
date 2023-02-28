@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Paymethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,13 +17,8 @@ class HistoryController extends Controller
     public function index()
     {
         //
-
         $history = Cart::where('user_id', Auth::id())->where('status', 'paid')->get();
-        // $transaction_ids = [];
         $orders = $history->unique('transaction_id');
-
-
-
 
         return view('users.history')
             ->with('history', $history)
@@ -61,6 +57,7 @@ class HistoryController extends Controller
         //
         $order = Cart::where('transaction_id',$transaction_id)->get();
         $order_details = $order->first();
+        $paymethod = Paymethod::all()->first();
         
         $total = 0;
 
@@ -72,7 +69,8 @@ class HistoryController extends Controller
         return view('users.order')
                 ->with('orders',$order)
                 ->with('order_details',$order_details)
-                ->with('total',$total);
+                ->with('total',$total)
+                ->with('paymethod',$paymethod);
     }
 
     /**

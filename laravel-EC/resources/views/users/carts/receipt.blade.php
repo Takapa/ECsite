@@ -46,13 +46,25 @@
                             <div class="row">
                                 <div class="col mb-3">
                                     <p class="small text-muted mb-1">注文日時</p>
-
-                                    <p>{{ $paid_items->first()->created_at->format('j-F-Y') }}</p>
+                                    <p>{{ $paid_items->first()->created_at->format('Y-m-d') }}</p>
                                     <p>{{ $paid_items->first()->created_at->diffForHumans() }}</p>
                                 </div>
                                 <div class="col mb-3">
                                     <p class="small text-muted mb-1">注文No.</p>
                                     <p>{{ $paid_items->first()->transaction_id  }}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <p class="small text-muted mb-1">届け先</p>
+                                    <p>{{ $paid_items->first()->created_at->format('Y-m-d') }}</p>
+                                    <p>{{ $paid_items->first()->created_at->diffForHumans() }}</p>
+                                </div>
+                                <div class="col mb-3">
+                                    <p class="small text-muted mb-1">支払い方法</p>
+                                    <p>クレジットカード</p>
+                                    {{-- <p>Visa {{ substr($paymethod->credit_number, 8,4) }}</p> --}}
                                 </div>
                             </div>
 

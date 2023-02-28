@@ -36,5 +36,9 @@ class AppServiceProvider extends ServiceProvider
                 view::share('count',$count);
             endif;
         });
+
     }
+
+    
+
 }
